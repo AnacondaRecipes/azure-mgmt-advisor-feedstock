@@ -1,0 +1,48 @@
+{% set name = "azure-mgmt-advisor" %}
+{% set version = "9.0.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
+  sha256: fc408b37315fe84781b519124f8cb1b8ac10b2f4241e439d0d3e25fd6ca18d7b
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+    - msrest >=0.5.0
+    - azure-common >=1.1,<2
+    - azure-mgmt-core >=1.2.0,<2.0.0
+
+test:
+  imports:
+    - azure.mgmt.advisor
+    - azure.mgmt.advisor.aio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python
+  summary: Microsoft Azure Advisor Client Library for Python
+  license: MIT
+  license_file: LICENSE
+  description: Microsoft Azure SDK for Python
+  dev_url: https://github.com/Azure/azure-sdk-for-python
+  doc_url: https://github.com/Azure/azure-sdk-for-python
+
+extra:
+  recipe-maintainers:
+    - janjagusch
